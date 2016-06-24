@@ -73,6 +73,11 @@
 #mymodallabel {
 	color: black;
 }
+
+.activity_information{
+	margin-bottom: 40px;
+}
+
 </style>
 </head>
 
@@ -294,21 +299,21 @@
 				<div class="activity-content">
 					<div class="activity-header">
 						<h2 class="activity-name">
-							走！看电影！<small>创建者：LeoEatle 创建时间：2016/6/5</small>
+							<span class = "title">走！看电影！</span><small>创建者：<span class="organizer">LeoEatle</span> 创建时间：<span class = "create_time">2016/6/5</span></small>
 						</h2>
 					</div>
 					<div class="activity-body">
 						<p class="content">
-							<span class="label">一句话：</span><span>《X战警：天启》已经上映，诚邀1到3名小伙伴，无论是漫威粉还是DC粉来者不拒</span>
+							<span class="label">一句话：</span><span class = "description">《X战警：天启》已经上映，诚邀1到3名小伙伴，无论是漫威粉还是DC粉来者不拒</span>
 						</p>
 						<p class="time text-primary">
-							<span class="label label-primary">时间: </span><span>2016年6月5日</span>
+							<span class="label label-primary">时间: </span><span class = "date">2016年6月5日</span>
 						</p>
-						<p class="address text-success">
-							<span class="label label-success">地点: </span><span>太阳新天地</span>
+						<p class=" text-success">
+							<span class="label label-success">地点: </span><span class = "address">太阳新天地</span>
 						</p>
-						<p class="limit_number text-warning">
-							<span class="label label-warning">限制人数：</span><span>2-5人</span>
+						<p class=" text-warning">
+							<span class="label label-warning">限制人数：</span><span class = "limit_number">2-5人</span>
 						</p>
 					</div>
 					<div class="activity-footer">
@@ -358,7 +363,7 @@
 										<label for="inputDate" class="col-md-2 control-label">活动日期</label>
 
 										<div class="col-md-10">
-											<input name="ActivityDate" type="test" class="form-control"
+											<input name="ActivityDate" type="text" class="form-control"
 												id="inputDate" placeholder="这会是难忘的一天">
 										</div>
 									</div>
@@ -366,7 +371,7 @@
 										<label for="inputContent" class="col-md-2 control-label">活动概要</label>
 
 										<div class="col-md-10">
-											<input name="ActivityContent" type="test"
+											<input name="ActivityContent" type="text"
 												class="form-control" id="inputContent"
 												placeholder="想如何介绍你的神奇活动？">
 										</div>
@@ -375,7 +380,7 @@
 										<label for="inputAddress" class="col-md-2 control-label">活动地点</label>
 
 										<div class="col-md-10">
-											<input name="ActivityAddress" type="test"
+											<input name="ActivityAddress" type="text"
 												class="form-control" id="inputAddress" placeholder="在哪里见面呢">
 										</div>
 									</div>
@@ -383,7 +388,7 @@
 										<label for="inputOrganizer" class="col-md-2 control-label">创始人的名字</label>
 
 										<div class="col-md-10">
-											<input name="ActivityOrganizer" type="test"
+											<input name="ActivityOrganizer" type="text"
 												class="form-control" id="inputOrganizer"
 												placeholder="伟大的活动创始人叫什么好">
 										</div>
@@ -393,7 +398,7 @@
 										</label>
 
 										<div class="col-md-10">
-											<select id="select111" class="form-control">
+											<select id="select111" class="form-control" name="limit_number" >
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
@@ -409,7 +414,7 @@
 
 									<div class="form-group">
 										<div class="col-md-10 col-md-offset-2">
-											<a type="button" class="btn btn-default btn-raised">忘了密码？</a>
+											
 
 											<button type="submit" class="btn btn-primary btn-raised">提交</button>
 										</div>
@@ -418,20 +423,12 @@
 							</form>
 
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal" onclick="toggleRegisterModal()">没有账号？点击注册</button>
-						</div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div>
-				<button id="test"
-					class="btn btn-lg btn-block btn-raised btn-warning ">test</button>
-			</div>
-		</div>
+		
 	</div>
 
 	<script type="text/javascript" src="dist/js/jquery.min.js"></script>
@@ -453,16 +450,68 @@ $(document).ready(function(){
 			            	console.log(objs);
 			            	console.log(obj);
 			            	console.log(activities);
+			            	console.log(activities[0].name);
+							console.log(activities.length);
+
+
+			            	insert_information(activities);
+
+
+
 			
 						},
 						error: function(){
 							alert("请求出错");
 						}
 				})
+
+
+	function insert_information(activities)
+	{
+		console.log('Now begin to insert informtion');
+		for (var i = 0; i < activities.length; i++) {
+
+			console.log("insert run for "+ i + "times");
+
+			var title = activities[i].name;
+			var date = activities[i].address;
+			var content = activities[i].content;
+			var create_time = activities[i].create_time;
+			var limit_number = activities[i].limit_number;
+			var organizer = activities[i].organizer;
+			var address = activities[i].address;
+
+			new_activity = $(".activity_information").clone(true,true);//复制一个新的activity_information well
+			
+			//填充信息
+			new_activity.find('.title').text(title);
+			new_activity.find('.date').text(date);
+			new_activity.find('.address').text(address);
+			new_activity.find('.description').text(content);
+			new_activity.find('.create_time').text(create_time);
+			new_activity.find('.organizer').text(organizer);
+			new_activity.find('.limit_number').text(limit_number);
+
+
+			$(".activity-create").before(new_activity);//将新的activity添加到发起活动按钮前面
+
+		
+
+
+
+
+
+		};
+		$(".activity_information").first().remove();//删除第一个模版
+
+
+	}
 	
 
 	function checkLogin()
 	{
+
+
 		
 	}
 
